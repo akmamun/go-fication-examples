@@ -1,4 +1,4 @@
-# Go Fication
+# Go Fication Examples
 An API framework written in Golang with chi-route and Gorm
 
 ## Table of Contents
