@@ -1,4 +1,5 @@
-# Go Fication Exampls
+# Go Fication Examples
+
 An Example repos of [go-fication](https://github.com/akmamun/go-fication)
 
 ## Table of Contents
