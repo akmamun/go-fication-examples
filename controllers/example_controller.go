@@ -44,7 +44,7 @@ func (h *ExampleHandler) CreateData(w http.ResponseWriter, request *http.Request
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(example)
+	json.NewEncoder(w).Encode(&example)
 }
 
 func (h *ExampleHandler) GetOne(w http.ResponseWriter, request *http.Request) {
@@ -58,4 +58,22 @@ func (h *ExampleHandler) GetOne(w http.ResponseWriter, request *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(&data)
+}
+
+func (h *ExampleHandler) GetOneAndUpdate(w http.ResponseWriter, request *http.Request) {
+
+	id, _ := strconv.Atoi(chi.URLParam(request, "id"))
+	var example models.Example
+	err := json.NewDecoder(request.Body).Decode(&example)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	err = h.repo.UpdateExample(id, &example)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"message": "successfully updated"})
 }

@@ -14,6 +14,7 @@ func ExamplesRoutes(router *chi.Mux, db *database.DB) {
 		r.Get("/test/", exampleCtrl.GetExamplesListData)
 		r.Post("/test/", exampleCtrl.CreateData)
 		r.Get("/test/{id}", exampleCtrl.GetOne)
+		r.Patch("/test/{id}", exampleCtrl.GetOneAndUpdate)
 
 	})
 }
