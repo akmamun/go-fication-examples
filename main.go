@@ -2,28 +2,33 @@ package main
 
 import (
 	"github.com/spf13/viper"
-	"go-fication/config"
-	"go-fication/infra/database"
-	"go-fication/infra/logger"
-	"go-fication/routers"
+	"go-fication-examples/config"
+	"go-fication-examples/infra/database"
+	"go-fication-examples/infra/logger"
+	"go-fication-examples/migrations"
+	"go-fication-examples/routers"
 	"net/http"
 	"time"
 )
 
 func main() {
 	viper.SetDefault("SERVER_TIMEZONE", "Asia/Dhaka")
+	viper.SetDefault("LOG_LEVEL", "DEBUG")
+	logLevel := viper.GetString("LOG_LEVEL")
+
 	loc, _ := time.LoadLocation(viper.GetString("SERVER_TIMEZONE"))
 	time.Local = loc
 
 	if err := config.SetupConfig(); err != nil {
 		logger.Error("%v", err)
 	}
+	logger.SetLogLevel(logLevel)
 
 	db, err := database.DBConnection(config.GetDNSConfig())
 	if err != nil {
 		logger.Fatal("%v", err)
 	}
-
+	migrations.Migrate(db)
 	router := routers.SetupRoute(db)
 	server := http.Server{
 		Addr:              config.ServerConfig(),

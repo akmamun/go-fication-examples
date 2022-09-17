@@ -1,15 +1,17 @@
-module go-fication
+module go-fication-examples
 
 go 1.17
 
 require (
+	github.com/akmamun/gorm-pagination v1.0.4
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-chi/cors v1.2.1
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/rs/zerolog v1.15.0
 	github.com/spf13/viper v1.10.1
 	gorm.io/driver/postgres v1.3.9
-	gorm.io/gorm v1.23.7
+	gorm.io/gorm v1.23.8
+
 )
 
 require (

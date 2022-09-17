@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
-	"go-fication/models"
-	"go-fication/repository"
+	"github.com/go-chi/chi/v5"
+	"go-fication-examples/models"
+	"go-fication-examples/repository"
 	"net/http"
 	"strconv"
 )
@@ -17,7 +18,7 @@ func NewExampleHandler(repo repository.ExampleRepo) *ExampleHandler {
 		repo: repo,
 	}
 }
-func (h *ExampleHandler) GetData(w http.ResponseWriter, request *http.Request) {
+func (h *ExampleHandler) GetExamplesListData(w http.ResponseWriter, request *http.Request) {
 	q := request.URL.Query()
 	limit, _ := strconv.Atoi(q.Get("limit"))
 	offset, _ := strconv.Atoi(q.Get("offset"))
@@ -44,4 +45,17 @@ func (h *ExampleHandler) CreateData(w http.ResponseWriter, request *http.Request
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(example)
+}
+
+func (h *ExampleHandler) GetOne(w http.ResponseWriter, request *http.Request) {
+
+	id, _ := strconv.Atoi(chi.URLParam(request, "id"))
+
+	data, err := h.repo.GetExample(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(&data)
 }

@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/go-chi/chi/v5"
-	"go-fication/infra/database"
+	"go-fication-examples/infra/database"
 	"net/http"
 )
 

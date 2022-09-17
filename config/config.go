@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	"go-fication/infra/logger"
+	"go-fication-examples/infra/logger"
 )
 
 type Configuration struct {

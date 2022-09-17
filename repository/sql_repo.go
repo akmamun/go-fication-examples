@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"go-fication/infra/database"
+	"go-fication-examples/infra/database"
 )
 
 type GormRepository struct {
